@@ -2,11 +2,19 @@
 import datetime
 
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
-
+class User(AbstractUser):
+    STATUS = (
+        ('student','student'),
+        ('teacher','teacher'),
+        ('admin','admin'),
+        ('super-admin','super-admin'),
+    )
+    image = models.ImageField(upload_to='image')
+    status = models.CharField(max_length=50,choices=STATUS)
 class Group(models.Model):
     name = models.CharField(max_length=100)
     
